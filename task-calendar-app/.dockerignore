@@ -1,0 +1,26 @@
+# Ignore Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore environment files
+.env
+
+# Ignore Docker files
+Dockerfile
+docker-compose.yml
+
+# Ignore frontend build files
+frontend/assets/build/
+frontend/css/*.map
+frontend/js/*.map
+
+# Ignore local storage files
+frontend/js/storage.js
+
+# Ignore any other unnecessary files
+*.log
+*.sqlite3
+*.db
+*.DS_Store

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Calendar App</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Columna 1: Lista de Tareas -->
+        <div class="column task-list">
+            <h2>Tareas</h2>
+            <button id="btnNewTask" class="btn-primary">+ Nueva Tarea</button>
+            <div id="tasksList"></div>
+        </div>
+
+        <!-- Columna 2: Formulario de Edición -->
+        <div class="column edit-form">
+            <h2>Editar Tarea</h2>
+            <form id="taskForm">
+                <input type="hidden" id="taskId">
+                <input type="text" id="title" placeholder="Título" required>
+                <textarea id="description" placeholder="Descripción" rows="3"></textarea>
+                <input type="text" id="category" placeholder="Categoría">
+                <select id="priority">
+                    <option value="1">Prioridad 1 (Baja)</option>
+                    <option value="2">Prioridad 2</option>
+                    <option value="3" selected>Prioridad 3 (Media)</option>
+                    <option value="4">Prioridad 4</option>
+                    <option value="5">Prioridad 5 (Alta)</option>
+                </select>
+                <input type="date" id="due_date">
+                <select id="status">
+                    <option value="pending">Pendiente</option>
+                    <option value="in_progress">En Progreso</option>
+                    <option value="completed">Completado</option>
+                </select>
+                <button type="submit" class="btn-primary">Guardar Tarea</button>
+                <button type="button" id="btnDelete" class="btn-danger">Eliminar</button>
+                <button type="button" id="btnClear" class="btn-secondary">Limpiar</button>
+            </form>
+        </div>
+
+        <!-- Columna 3: Panel de Adjuntos -->
+        <div class="column attachments">
+            <h2>Adjuntos</h2>
+            <input type="file" id="fileInput" multiple>
+            <button id="btnUpload" class="btn-primary">Subir Archivo</button>
+            <div id="attachmentsList"></div>
+        </div>
+    </div>
+
+    <script src="js/storage.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
