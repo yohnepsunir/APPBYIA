@@ -1,25 +1,26 @@
 # Task Calendar App
 
-## Overview
-The Task Calendar App is a web-based application designed for task management and calendar functionalities. It allows users to create, read, update, and delete tasks, while also providing a user-friendly interface for managing their tasks effectively.
+## Descripción General
 
-## Features
-- Three-column interface: 
-  - Task List
-  - Task Editing Form
-  - File Attachment Panel
-- Each task includes:
-  - Title
-  - Description
-  - Category
-  - Priority (1-5)
-  - Due Date
-  - Status
-- Full CRUD functionality for task management
-- Local storage support for task persistence
-- Docker containerization for easy local deployment
+**Task Calendar App** es una aplicación web para la gestión de tareas y calendario, desarrollada íntegramente con la asistencia de inteligencia artificial (IA). Todo el código, la estructura y la documentación fueron generados mediante instrucciones y prompts dirigidos a una IA, sin intervención manual en la edición del código por parte del usuario. Este proyecto demuestra cómo la IA puede ser utilizada como herramienta principal para diseñar, implementar y corregir aplicaciones web modernas.
 
-## Project Structure
+## Características
+- Interfaz de tres columnas:
+  - Lista de tareas
+  - Formulario de edición de tareas
+  - Panel de archivos adjuntos
+- Cada tarea incluye:
+  - Título
+  - Descripción
+  - Categoría
+  - Prioridad (1-5)
+  - Fecha de vencimiento
+  - Estado
+- Funcionalidad completa de gestión de tareas (CRUD)
+- Soporte de almacenamiento local para persistencia de tareas
+- Dockerización para despliegue local sencillo
+
+## Estructura del Proyecto
 ```
 task-calendar-app
 ├── backend
@@ -46,32 +47,36 @@ task-calendar-app
 └── README.md
 ```
 
-## Getting Started
+## Cómo Ejecutar la Aplicación
 
-### Prerequisites
+### Requisitos Previos
 - Docker
 - Docker Compose
 
-### Installation
-1. Clone the repository:
+### Instalación y Ejecución
+1. Clona el repositorio:
    ```
    git clone https://github.com/yohnepsunir/APPBYIA.git
    cd task-calendar-app
    ```
 
-2. Build and run the application using Docker Compose:
+2. Construye y ejecuta la aplicación con Docker Compose:
    ```
    docker-compose up --build
    ```
 
-3. Access the application in your web browser at `http://localhost:5000`.
+3. Accede a la aplicación en tu navegador en `http://localhost:5000`.
 
-### Usage
-- Use the interface to add new tasks, edit existing ones, and manage your task list.
-- Tasks will be stored in local storage for persistence across sessions.
+### Uso
+- Utiliza la interfaz para agregar nuevas tareas, editar las existentes y gestionar tu lista de tareas.
+- Las tareas se almacenan en el almacenamiento local del navegador para mantener la persistencia entre sesiones.
 
-## Contributing
-Contributions are welcome! Please submit a pull request or open an issue for any enhancements or bug fixes.
+## Contribuciones
+¡Las contribuciones son bienvenidas! Puedes enviar un pull request o abrir un issue para sugerencias, mejoras o corrección de errores.
 
-## License
-This project is licensed under the MIT License. See the LICENSE file for details.
+## Licencia
+Este proyecto está bajo la licencia MIT. Consulta el archivo LICENSE para más detalles.
+
+---
+
+> **Nota:** Todo el desarrollo, corrección y documentación de esta aplicación se realizó exclusivamente mediante interacción con IA, sin edición manual de código.
