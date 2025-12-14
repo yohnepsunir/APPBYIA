@@ -1,0 +1,53 @@
+# Dockerfile optimizado para producción
+FROM python:3.9-slim as base
+
+# Metadata
+LABEL maintainer="yohnepsunir"
+LABEL description="Task Calendar Application"
+LABEL version="1.0"
+
+# Variables de entorno
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+
+WORKDIR /app
+
+# Instalar dependencias del sistema
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    gcc \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copiar requirements primero para aprovechar cache de Docker
+COPY backend/requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Stage de testing (opcional)
+FROM base as test
+COPY backend/ ./backend/
+COPY frontend/ ./frontend/
+RUN cd backend && python -m pytest tests/ -v
+
+# Stage de producción
+FROM base as production
+
+# Crear usuario no-root
+RUN useradd -m -u 1000 appuser && \
+    chown -R appuser:appuser /app
+
+# Copiar código de la aplicación
+COPY --chown=appuser:appuser backend/ ./backend/
+COPY --chown=appuser:appuser frontend/ ./frontend/
+
+# Cambiar a usuario no-root
+USER appuser
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD python -c "import requests; requests.get('http://localhost:5000/api/health')" || exit 1
+
+EXPOSE 5000
+
+# Comando por defecto
+CMD ["python", "backend/app.py"]

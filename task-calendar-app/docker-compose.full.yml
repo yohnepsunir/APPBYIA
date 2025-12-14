@@ -1,0 +1,93 @@
+version: '3.8'
+
+services:
+  # Servicio de desarrollo
+  backend-dev:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: task-calendar-dev
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=development
+      - FLASK_APP=backend/app.py
+      - FLASK_DEBUG=1
+    volumes:
+      - ./backend:/app/backend
+      - ./frontend:/app/frontend
+      - db_data_dev:/app/data
+    command: python backend/app.py
+    working_dir: /app
+    networks:
+      - app-network
+    restart: unless-stopped
+
+  # Servicio de producción
+  backend-prod:
+    build:
+      context: ./
+      dockerfile: Dockerfile.prod
+      target: production
+    container_name: task-calendar-prod
+    ports:
+      - "5001:5000"
+    environment:
+      - FLASK_ENV=production
+      - FLASK_APP=backend/app.py
+    volumes:
+      - db_data_prod:/app/data
+    networks:
+      - app-network
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Servicio de testing
+  backend-test:
+    build:
+      context: ./
+      dockerfile: Dockerfile.prod
+      target: test
+    container_name: task-calendar-test
+    environment:
+      - FLASK_ENV=testing
+    volumes:
+      - ./backend:/app/backend
+    networks:
+      - app-network
+    command: python -m pytest tests/ -v --cov=. --cov-report=term-missing
+    profiles:
+      - testing
+
+  # Nginx como reverse proxy (opcional para producción)
+  nginx:
+    image: nginx:alpine
+    container_name: task-calendar-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - backend-prod
+    networks:
+      - app-network
+    restart: always
+    profiles:
+      - production
+
+volumes:
+  db_data_dev:
+    driver: local
+  db_data_prod:
+    driver: local
+
+networks:
+  app-network:
+    driver: bridge
